@@ -110,6 +110,18 @@ FakeStoreAPI POST responses do not guarantee persistence or synchronization with
 
 ## Admin shell and products
 
+## Users
+
+`/users` loads users from the shared Axios service and combines them with session-only created users. Search matches first name, family name, username, and email after a 300 ms debounce, resetting pagination to page one. Lists use six records per page and include loading, retryable error, empty, and success states.
+
+`/users/create` uses Formik and an independent Yup schema. First name, family name, username, email, password, and phone are required. The demo policy requires at least eight password characters and a 7–20 character phone representation using Latin digits, optional leading plus, spaces, parentheses, or hyphens. These are client validation choices, not claims about production backend rules.
+
+Successful creation appends a non-sensitive user record to Redux and returns to the list with localized feedback. Passwords are excluded from Redux collections and browser persistence. Created users disappear on reload or logout because FakeStoreAPI does not persist these writes reliably. Editing, deleting, roles, and permissions remain out of scope.
+
+## Verification boundaries
+
+Compile checks and browser checks are separate. A successful build does not prove live API availability, keyboard behavior, visual matching, or desktop overflow. Do not treat unperformed browser checks as passed. Desktop target is 1280px and above; wide user tables have internal scrolling.
+
 Authenticated routes include the dashboard, product list, and Create Product form. The fixed navy Sidebar owns navigation, language, theme, and logout. The users routes currently show an explicit pending state until their implementation step.
 
 Products are loaded through the shared service, searched locally by title, and paginated in groups of six. Successfully created products are prepended from the Redux temporary collection; they disappear on reload or logout and are not synchronized with NOVA Store. Search resets pagination; page bounds are clamped after dataset changes. Prices retain the API's USD contract.

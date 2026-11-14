@@ -11,6 +11,11 @@ node_modules
 dist
 dist-ssr
 *.local
+.env
+.env.*
+!.env.example
+pnpm-lock.yaml
+pnpm-workspace.yaml
 /AGENTS.md
 
 # Editor directories and files
