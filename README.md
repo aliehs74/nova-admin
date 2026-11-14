@@ -108,6 +108,14 @@ FakeStoreAPI cannot issue application-controlled HttpOnly cookies here. sessionS
 
 FakeStoreAPI POST responses do not guarantee persistence or synchronization with Store. Future create screens must append successful responses to their current in-memory dataset. Frontend pagination operates on that dataset, including temporary records, and search changes must reset the current page. The shared pagination utility clamps page bounds.
 
+## Admin shell and products
+
+Authenticated routes include the dashboard, product list, and Create Product form. The fixed navy Sidebar owns navigation, language, theme, and logout. The users routes currently show an explicit pending state until their implementation step.
+
+Products are loaded through the shared service, searched locally by title, and paginated in groups of six. Successfully created products are prepended from the Redux temporary collection; they disappear on reload or logout and are not synchronized with NOVA Store. Search resets pagination; page bounds are clamped after dataset changes. Prices retain the API's USD contract.
+
+The product form validates title, description, positive price, an available category, and an HTTP/HTTPS image URL with Formik/Yup. Category loading and failures are independent from product loading, and submission is disabled until categories are available. Submission success returns to the list with feedback. Image selection uses URLs, not an upload backend.
+
 The repository starts on an unborn `develop` branch. No baseline commit has been created. Part branches can be created from the baseline after its explicit approval and commit. Each Major uses `part<number>-<english-title>` and commit scope `p<number>`. Each commit, merge, and push requires separate explicit approval. The previous part must be merged into develop before the next part branch is created. Branches are retained after merges.
 
 The local instruction file is ignored and must never be staged or committed.

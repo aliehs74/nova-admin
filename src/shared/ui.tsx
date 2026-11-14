@@ -3,6 +3,7 @@ import type { ReactNode, SelectHTMLAttributes } from 'react'
 import styled from 'styled-components'
 import Button from '@/components/atoms/button'
 import Input from '@/components/atoms/input'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 const StackControl = styled.div`
   display: grid;
@@ -46,7 +47,7 @@ export const Select = ({ label, children, ...props }: SelectHTMLAttributes<HTMLS
 
   return (
     <Stack>
-      <label htmlFor={id}>{label}</label>
+      <label htmlFor={id}>{label.endsWith(' *') ? <>{label.slice(0, -2)} <span style={{ color: '#c62828' }}>*</span></> : label}</label>
       <SelectControl {...props} id={id}>{children}</SelectControl>
     </Stack>
   )
@@ -79,12 +80,22 @@ const TableControl = styled.table`
 export const Pagination = ({ page, count, onChange, previous, next, label, locale }: {
   page: number; count: number; onChange: (page: number) => void; previous: string; next: string; label: string; locale: string
 }) => (
-  <Row as="nav" aria-label={label}>
-    <Button customVariant="secondary" disabled={page <= 1} onClick={() => onChange(page - 1)}>{previous}</Button>
-    <span aria-live="polite">{new Intl.NumberFormat(locale).format(page)} / {new Intl.NumberFormat(locale).format(count)}</span>
-    <Button customVariant="secondary" disabled={page >= count} onClick={() => onChange(page + 1)}>{next}</Button>
-  </Row>
+  <PaginationControl aria-label={label} dir="ltr">
+    <button type="button" aria-label={previous} disabled={page <= 1} onClick={() => onChange(page - 1)}><ChevronLeft size={20} aria-hidden="true" /></button>
+    {Array.from({ length: count }, (_, index) => index + 1).map(number => <button key={number} type="button" aria-label={`${label} ${new Intl.NumberFormat(locale).format(number)}`} aria-current={number === page ? 'page' : undefined} onClick={() => onChange(number)}>{new Intl.NumberFormat(locale).format(number)}</button>)}
+    <button type="button" aria-label={next} disabled={page >= count} onClick={() => onChange(page + 1)}><ChevronRight size={20} aria-hidden="true" /></button>
+  </PaginationControl>
 )
+
+const PaginationControl = styled.nav`
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  padding-top: 1rem;
+  button { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid ${({ theme }) => theme.colors.border}; border-radius: .4rem; background: ${({ theme }) => theme.colors.surface}; color: ${({ theme }) => theme.colors.text}; cursor: pointer; }
+  button[aria-current='page'] { background: #1763da; border-color: #1763da; color: white; }
+  button:disabled { opacity: .45; cursor: default; }
+`
 
 const DialogControl = styled.dialog`
   width: min(32rem, calc(100% - 2rem));

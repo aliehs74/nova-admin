@@ -10,7 +10,7 @@ const Input = ({ label, id, className, ...props }: TInputProps) => {
 
   return (
     <Field htmlFor={inputId}>
-      {label}
+      <span>{label.endsWith(' *') ? <>{label.slice(0, -2)} <span style={{ color: '#c62828' }}>*</span></> : label}</span>
       <Control {...props} id={inputId} dir="auto" className={className} />
     </Field>
   );

@@ -6,16 +6,13 @@ import { clearCollections, setToken } from '@/redux'
 import { isValidToken, saveSession } from '@/storage/session'
 import { readPreference } from '@/shared/preferences'
 import Login from '@/pages/login'
-import DesignSystem from '@/DesignSystem'
-import Button from '@/components/atoms/button'
-import dictionary from '@/dictionary'
+import Homepage from '@/pages/homepage'
 import routes from './index'
 
 const Router = () => {
   const token = useSelector((state: TRootState) => state.auth.token)
   const dispatch = useDispatch()
   const locale = readPreference('nova-admin-locale') === 'en' ? 'en' : 'fa'
-  const logout = () => { saveSession(null); dispatch(setToken(null)); dispatch(clearCollections()) }
   useEffect(() => {
     document.documentElement.lang = locale
     document.documentElement.dir = locale === 'fa' ? 'rtl' : 'ltr'
@@ -30,7 +27,7 @@ const Router = () => {
   return (
     <Routes>
       <Route path={routes.login} element={token ? <Navigate to={routes.home} replace /> : <Login />} />
-      <Route path={routes.home} element={token ? <><Button onClick={logout}>{dictionary[locale].logout}</Button><DesignSystem /></> : <Navigate to={routes.login} replace />} />
+      {[routes.home, routes.products, routes.createProduct, routes.users, routes.createUser].map(path => <Route key={path} path={path} element={token ? <Homepage /> : <Navigate to={routes.login} replace />} />)}
       <Route path="*" element={<Navigate to={routes.home} replace />} />
     </Routes>
   )
