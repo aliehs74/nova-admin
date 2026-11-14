@@ -89,6 +89,25 @@ The requested folder tree exists locally. Empty responsibility folders are inten
 
 ## Git workflow
 
+## API and experimental authentication
+
+Public FakeStoreAPI demo credentials:
+
+```text
+Username: mor_2314
+Password: 83r5^_
+```
+
+These credentials belong to the public mock service and must not be reused for a real account.
+
+All Admin endpoints use the Axios instance in `src/utils/api`, with an environment-provided URL, JSON headers, a 15-second timeout, and normalized errors. Endpoint payloads and responses are typed separately from presentation. TypeScript types do not constitute runtime response validation.
+
+Authentication uses Formik/Yup, Redux Toolkit, and protected React Router routes. A session is restored synchronously before protected content renders. Tokens are held in sessionStorage for the current tab and checked for a valid JWT expiration. This check does not verify signatures or replace backend authorization. Passwords are not persisted.
+
+FakeStoreAPI cannot issue application-controlled HttpOnly cookies here. sessionStorage remains readable by JavaScript and vulnerable to XSS. Production authentication should use a supporting backend and secure HttpOnly/Secure/SameSite cookies. No browser encryption key is embedded.
+
+FakeStoreAPI POST responses do not guarantee persistence or synchronization with Store. Future create screens must append successful responses to their current in-memory dataset. Frontend pagination operates on that dataset, including temporary records, and search changes must reset the current page. The shared pagination utility clamps page bounds.
+
 The repository starts on an unborn `develop` branch. No baseline commit has been created. Part branches can be created from the baseline after its explicit approval and commit. Each Major uses `part<number>-<english-title>` and commit scope `p<number>`. Each commit, merge, and push requires separate explicit approval. The previous part must be merged into develop before the next part branch is created. Branches are retained after merges.
 
 The local instruction file is ignored and must never be staged or committed.

@@ -1,5 +1,6 @@
 const dictionary = {
   fa: {
+    loginTitle: 'پنل مدیریت', username: 'نام کاربری', login: 'ورود', logout: 'خروج', loginError: 'ورود انجام نشد. اطلاعات ورود و اتصال خود را بررسی کنید.',
     title: 'سیستم طراحی NOVA', language: 'English', theme: 'تغییر تم',
     name: 'نام', password: 'رمز عبور', search: 'جست‌وجو', category: 'دسته‌بندی',
     all: 'همه', products: 'محصولات', users: 'کاربران', save: 'ذخیره', cancel: 'انصراف',
@@ -10,6 +11,7 @@ const dictionary = {
     description: 'کنترل‌های مشترک پنل مدیریت', dialog: 'ذخیره تغییرات', message: 'تغییرات را بررسی و تأیید کنید.',
   },
   en: {
+    loginTitle: 'Management panel', username: 'Username', login: 'Log in', logout: 'Log out', loginError: 'Unable to log in. Check your credentials and connection.',
     title: 'NOVA design system', language: 'فارسی', theme: 'Switch theme',
     name: 'Name', password: 'Password', search: 'Search', category: 'Category',
     all: 'All', products: 'Products', users: 'Users', save: 'Save', cancel: 'Cancel',
