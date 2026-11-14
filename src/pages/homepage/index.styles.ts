@@ -13,6 +13,10 @@ export const Shell = styled.div`
   button { flex-shrink: 0; }
   table img { width: 4rem; height: 4rem; object-fit: contain; background: white; border-radius: .5rem; }
   td { max-width: 24rem; }
+  .table-scroll { overflow-x: auto; max-width: 100%; }
+  .users-table th, .users-table td { text-align: right; }
+  .table-scroll table { min-width: 42rem; }
+  .user-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
   table caption { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
   table thead { background: #f7f7f7; color: #192b43; }
   table { border-collapse: separate; border-spacing: 0; }

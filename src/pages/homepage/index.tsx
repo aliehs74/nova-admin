@@ -7,6 +7,8 @@ import Sidebar from '@/components/organisms/sidebar'
 import Products from '@/pages/products'
 import CreateProduct from '@/pages/createProduct'
 import Dashboard from '@/pages/dashboard'
+import Users from '@/pages/users'
+import CreateUser from '@/pages/createUser'
 import { Shell } from './index.styles'
 const Homepage = () => {
   const [locale, setLocale] = useState<'fa' | 'en'>(() => readPreference('nova-admin-locale') === 'en' ? 'en' : 'fa')
@@ -20,6 +22,6 @@ const location = useLocation()
     writePreference('nova-admin-locale', locale)
     writePreference('nova-admin-theme', dark ? 'dark' : 'light')
   }, [locale, dark])
-return (<Shell className={sidebarOpen ? '' : 'sidebar-closed'}>{sidebarOpen && <Sidebar locale={locale} dark={dark} setLocale={setLocale} setDark={setDark} />}<AdminHeader locale={locale} sidebarOpen={sidebarOpen} onToggle={() => setSidebarOpen(!sidebarOpen)} /><main>{location.pathname === routes.createProduct ? <CreateProduct locale={locale} /> : location.pathname === routes.products ? <Products locale={locale} /> : <Dashboard locale={locale} />}</main></Shell>)
+return (<Shell className={sidebarOpen ? '' : 'sidebar-closed'}>{sidebarOpen && <Sidebar locale={locale} dark={dark} setLocale={setLocale} setDark={setDark} />}<AdminHeader locale={locale} sidebarOpen={sidebarOpen} onToggle={() => setSidebarOpen(!sidebarOpen)} /><main>{location.pathname === routes.createUser ? <CreateUser locale={locale} /> : location.pathname === routes.users ? <Users locale={locale} /> : location.pathname === routes.createProduct ? <CreateProduct locale={locale} /> : location.pathname === routes.products ? <Products locale={locale} /> : <Dashboard locale={locale} />}</main></Shell>)
 }
 export default Homepage
